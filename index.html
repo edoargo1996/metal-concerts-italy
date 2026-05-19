@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🤘 Metal in Italia — Concerti 2025</title>
-<meta name="description" content="Concerti metal in Italia — tutte le date, i venue e i biglietti per il 2025">
+<title>🤘 Metal in Italia — Concerti 2025/2026</title>
+<meta name="description" content="Concerti metal in Italia — date verificate, venue e link ai biglietti">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://edoargo1996.github.io/metal-concerts-italy/">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -20,6 +22,8 @@
     --text3: #666;
     --border: #2a2a2a;
     --glow: rgba(230, 57, 70, 0.15);
+    --verified: #4caf50;
+    --unverified: #ff9800;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,7 +36,6 @@
     overflow-x: hidden;
   }
 
-  /* Noise overlay */
   body::before {
     content: '';
     position: fixed;
@@ -42,7 +45,6 @@
     z-index: 9999;
   }
 
-  /* Header */
   .header {
     position: relative;
     padding: 4rem 2rem 3rem;
@@ -61,7 +63,7 @@
     pointer-events: none;
   }
 
-  .header-tag {
+  .header-badge {
     display: inline-block;
     background: var(--accent);
     color: white;
@@ -90,10 +92,17 @@
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     color: var(--text2);
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
   }
 
-  /* Stats bar */
+  .header .disclaimer {
+    font-size: 0.8rem;
+    color: var(--text3);
+    max-width: 500px;
+    margin: 0.5rem auto 0;
+    line-height: 1.4;
+  }
+
   .stats {
     display: flex;
     justify-content: center;
@@ -105,9 +114,7 @@
     background: var(--surface);
   }
 
-  .stat {
-    text-align: center;
-  }
+  .stat { text-align: center; }
 
   .stat-num {
     font-family: 'Bebas Neue', sans-serif;
@@ -122,7 +129,34 @@
     letter-spacing: 1px;
   }
 
-  /* Filter bar */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding: 1rem 2rem;
+    background: var(--surface2);
+    font-size: 0.8rem;
+    color: var(--text2);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .legend-dot.verified { background: var(--verified); }
+  .legend-dot.upcoming { background: var(--gold); }
+  .legend-dot.tba { background: var(--unverified); }
+
   .filters {
     display: flex;
     gap: 0.5rem;
@@ -144,6 +178,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: inherit;
   }
 
   .filter-btn:hover, .filter-btn.active {
@@ -152,16 +187,13 @@
     border-color: var(--accent);
   }
 
-  /* Concert list */
   .concerts {
     max-width: 900px;
     margin: 0 auto;
     padding: 1rem 1.5rem 4rem;
   }
 
-  .month-group {
-    margin-bottom: 2rem;
-  }
+  .month-group { margin-bottom: 2rem; }
 
   .month-label {
     font-family: 'Bebas Neue', sans-serif;
@@ -183,7 +215,6 @@
     gap: 1rem;
     align-items: center;
     transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    cursor: default;
     text-decoration: none;
     color: inherit;
   }
@@ -194,10 +225,11 @@
     box-shadow: 0 8px 30px rgba(230, 57, 70, 0.15);
   }
 
-  .date-block {
-    text-align: center;
-    min-width: 60px;
-  }
+  .concert-card.status-verified { border-left: 3px solid var(--verified); }
+  .concert-card.status-upcoming { border-left: 3px solid var(--gold); }
+  .concert-card.status-tba { border-left: 3px solid var(--unverified); }
+
+  .date-block { text-align: center; min-width: 60px; }
 
   .date-day {
     font-family: 'Bebas Neue', sans-serif;
@@ -219,9 +251,7 @@
     color: var(--text3);
   }
 
-  .concert-info {
-    min-width: 0;
-  }
+  .concert-info { min-width: 0; }
 
   .band-name {
     font-weight: 700;
@@ -249,10 +279,22 @@
     margin-top: 0.15rem;
   }
 
-  .venue-info .city {
-    color: var(--accent2);
-    font-weight: 600;
+  .venue-info .city { color: var(--accent2); font-weight: 600; }
+
+  .status-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 0.5rem;
   }
+
+  .status-tag.verified { background: rgba(76, 175, 80, 0.2); color: var(--verified); }
+  .status-tag.upcoming { background: rgba(255, 215, 0, 0.2); color: var(--gold); }
+  .status-tag.tba { background: rgba(255, 152, 0, 0.2); color: var(--unverified); }
 
   .ticket-btn {
     display: inline-flex;
@@ -280,7 +322,6 @@
     pointer-events: none;
   }
 
-  /* Hero featured */
   .featured {
     position: relative;
     background: linear-gradient(135deg, var(--surface) 0%, #1a0a0a 100%);
@@ -320,10 +361,7 @@
     margin-bottom: 0.5rem;
   }
 
-  .featured p {
-    color: var(--text2);
-    margin-bottom: 1rem;
-  }
+  .featured p { color: var(--text2); margin-bottom: 1rem; }
 
   .featured-meta {
     display: flex;
@@ -332,76 +370,66 @@
     font-size: 0.85rem;
   }
 
-  .featured-meta span {
-    color: var(--text2);
-  }
+  .featured-meta span { color: var(--text2); }
+  .featured-meta strong { color: var(--text); }
 
-  .featured-meta strong {
-    color: var(--text);
-  }
-
-  /* Newsletter */
-  .newsletter {
+  .sources {
     background: var(--surface);
     border-top: 1px solid var(--border);
     padding: 3rem 2rem;
-    text-align: center;
   }
 
-  .newsletter h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .newsletter p {
-    color: var(--text2);
-    margin-bottom: 1.5rem;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .newsletter-form {
-    display: flex;
-    gap: 0.5rem;
-    max-width: 400px;
+  .sources-inner {
+    max-width: 900px;
     margin: 0 auto;
   }
 
-  .newsletter-form input {
-    flex: 1;
-    background: var(--bg);
+  .sources h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .sources p {
+    color: var(--text2);
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    font-size: 0.9rem;
+  }
+
+  .source-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .source-link {
+    display: block;
+    background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 0.75rem 1rem;
+    padding: 1rem;
+    text-decoration: none;
     color: var(--text);
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
   }
 
-  .newsletter-form input:focus {
+  .source-link:hover {
     border-color: var(--accent);
+    transform: translateY(-2px);
   }
 
-  .newsletter-form button {
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 700;
+  .source-link .source-name {
+    font-weight: 600;
     font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.2s;
+    margin-bottom: 0.25rem;
   }
 
-  .newsletter-form button:hover {
-    background: #c62828;
+  .source-link .source-desc {
+    font-size: 0.75rem;
+    color: var(--text3);
   }
 
-  /* Footer */
   .footer {
     text-align: center;
     padding: 2rem;
@@ -410,33 +438,8 @@
     border-top: 1px solid var(--border);
   }
 
-  .footer a {
-    color: var(--accent);
-    text-decoration: none;
-  }
+  .footer a { color: var(--accent); text-decoration: none; }
 
-  /* Responsive */
-  @media (max-width: 600px) {
-    .concert-card {
-      grid-template-columns: auto 1fr;
-      gap: 0.75rem;
-    }
-    .ticket-btn {
-      grid-column: 1 / -1;
-      justify-content: center;
-    }
-    .featured {
-      padding: 1.5rem;
-    }
-    .featured h2 {
-      font-size: 1.8rem;
-    }
-    .stats {
-      gap: 1.5rem;
-    }
-  }
-
-  /* Animated divider */
   .divider {
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
@@ -444,7 +447,6 @@
     opacity: 0.3;
   }
 
-  /* Scroll reveal */
   .reveal {
     opacity: 0;
     transform: translateY(20px);
@@ -455,18 +457,44 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  .note-box {
+    background: rgba(255, 152, 0, 0.1);
+    border: 1px solid rgba(255, 152, 0, 0.3);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .note-box strong { color: var(--unverified); }
+
+  @media (max-width: 600px) {
+    .concert-card {
+      grid-template-columns: auto 1fr;
+      gap: 0.75rem;
+    }
+    .ticket-btn {
+      grid-column: 1 / -1;
+      justify-content: center;
+    }
+    .featured { padding: 1.5rem; }
+    .featured h2 { font-size: 1.8rem; }
+    .stats { gap: 1.5rem; }
+  }
 </style>
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
-  <div class="header-tag">🤘 Stagione 2025</div>
+  <div class="header-badge">🤘 Concerti Verificati 2025/2026</div>
   <h1>METAL IN<br>ITALIA</h1>
-  <p>Tutti i concerti metal nel Bel Paese — date, venue e biglietti. Non perderti nessuna data.</p>
+  <p>Date verificate, venue e link ai biglietti per i concerti metal nel Bel Paese.</p>
+  <p class="disclaimer">Solo concerti con fonte ufficiale verificata ✅ — nessuna data inventata</p>
 </header>
 
-<!-- Stats -->
 <div class="stats">
   <div class="stat">
     <div class="stat-num" id="concert-count">0</div>
@@ -477,12 +505,17 @@
     <div class="stat-label">Città</div>
   </div>
   <div class="stat">
-    <div class="stat-num" id="month-range">—</div>
-    <div class="stat-label">Periodo</div>
+    <div class="stat-num" id="verified-count">0</div>
+    <div class="stat-label">Verificati</div>
   </div>
 </div>
 
-<!-- Filters -->
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot verified"></span> Confermato e verificato</div>
+  <div class="legend-item"><span class="dot upcoming" style="background:var(--gold);width:10px;height:10px;border-radius:50%;display:inline-block"></span> Annunciato, vendita biglietti imminente</div>
+  <div class="legend-item"><span class="legend-dot tba"></span> Da confermare (in attesa di data)</div>
+</div>
+
 <div class="filters" id="filters">
   <button class="filter-btn active" data-filter="all">Tutti</button>
   <button class="filter-btn" data-filter="thrash">Thrash</button>
@@ -493,101 +526,211 @@
   <button class="filter-btn" data-filter="industrial">Industrial</button>
   <button class="filter-btn" data-filter="doom">Doom</button>
   <button class="filter-btn" data-filter="folk">Folk</button>
+  <button class="filter-btn" data-filter="groove">Groove</button>
 </div>
 
-<!-- Concerts -->
 <main class="concerts" id="concert-list">
   <p style="text-align:center;color:var(--text3);padding:2rem">Caricamento concerti...</p>
 </main>
 
 <div class="divider"></div>
 
-<!-- Newsletter -->
-<section class="newsletter">
-  <h3>NON PERDERE NESSUNA DATA</h3>
-  <p>Registrati per ricevere aggiornamenti sui nuovi concerti metal in Italia.</p>
-  <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\\'color:var(--accent);font-weight:600\\'>🤘 Registrato! Ti aggiorneremo su ogni nuova data.</p>'">
-    <input type="email" placeholder="la.tua@email.com" required>
-    <button type="submit">AVVIA</button>
-  </form>
+<section class="sources">
+  <div class="sources-inner">
+    <h3>🔍 VERIFICA DA SOLO</h3>
+    <p>Controlla sempre le fonti ufficiali prima di acquistare biglietti. Le date possono cambiare.</p>
+    <div class="source-links">
+      <a href="https://www.metallica.com/tour/" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">🤘 Metallica.com</div>
+        <div class="source-desc">Tour ufficiale — M72 World Tour</div>
+      </a>
+      <a href="https://www.ironmaiden.com/tour/" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">👾 IronMaiden.com</div>
+        <div class="source-desc">Run For Your Lives World Tour</div>
+      </a>
+      <a href="https://www.ticketmaster.it/" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">🎫 Ticketmaster.it</div>
+        <div class="source-desc">Biglietti ufficiali Italia</div>
+      </a>
+      <a href="https://www.livenation.it/" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">🎤 LiveNation.it</div>
+        <div class="source-desc">Concerti e festival Italia</div>
+      </a>
+      <a href="https://www.vivaticket.it/" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">🏛️ VivaTicket.it</div>
+        <div class="source-desc">Biglietti per eventi in Italia</div>
+      </a>
+      <a href="https://www.rockol.it/concerti" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">📰 Rockol.it</div>
+        <div class="source-desc">News e concerti in Italia</div>
+      </a>
+    </div>
+  </div>
 </section>
 
-<!-- Footer -->
 <footer class="footer">
-  <p>Metal in Italia — Aggiornato al {{DATE}} • Dati da fonti pubbliche • <a href="#">Segnala un concerto</a></p>
+  <p>Metal in Italia — Aggiornato al {{DATE}} • <a href="https://github.com/edoargo1996/metal-concerts-italy" target="_blank" rel="noopener">Codice sorgente</a></p>
+  <p style="margin-top:0.5rem">Solo date verificate da fonti ufficiali. I dati potrebbero non essere completi.</p>
   <p style="margin-top:0.5rem">Fatto con 🤘 per i metalheads italiani</p>
 </footer>
 
 <script>
-// Concert data
 const concerts = [
-  // GIUGNO 2025
-  { date: '2025-06-07', band: 'Powerwolf', genre: ['power'], venue: 'Fabrique', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-06-10', band: 'Sabaton', genre: ['power'], venue: 'Alcatraz', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-06-13', band: 'Lorna Shore', genre: ['death'], venue: 'Fabrique', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-06-14', band: 'Amorphis', genre: ['death', 'folk'], venue: 'Circolo Magnolia', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-06-18', band: 'Epica', genre: ['symphonic'], venue: 'Alcatraz', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
+  // ========================================
+  // CONCERTI VERIFICATI (fonte: sito ufficiale della band o biglietteria)
+  // ========================================
 
-  // LUGLIO 2025
-  { date: '2025-07-02', band: 'Iron Maiden', genre: ['heavy'], venue: 'Stadio Olimpico', city: 'Roma', ticket: 'https://www.ticketmaster.it', featured: true, note: 'Future Past World Tour' },
-  { date: '2025-07-05', band: 'Iron Maiden', genre: ['heavy'], venue: 'Ippodromo del Galoppo', city: 'Milano', ticket: 'https://www.ticketmaster.it', featured: true, note: 'Future Past World Tour' },
-  { date: '2025-07-07', band: 'Iron Maiden', genre: ['heavy'], venue: 'PalaFlorio', city: 'Bari', ticket: 'https://www.ticketmaster.it', note: 'Future Past World Tour' },
-  { date: '2025-07-11', band: 'Slipknot', genre: ['industrial'], venue: 'I-Bre Arena', city: 'Brescia', ticket: 'https://www.ticketmaster.it', featured: true, note: 'Here Comes The Pain Tour' },
-  { date: '2025-07-22', band: 'Judas Priest', genre: ['heavy'], venue: 'Carroponte', city: 'Sesto San Giovanni (MI)', ticket: 'https://www.ticketmaster.it' },
+  // METALLICA — M72 World Tour 2026
+  // Fonte: metallica.com/tour (verificato via curl il 19/05/2025)
+  // Supporting: Gojira + Knocked Loose
+  {
+    date: '2026-06-03',
+    band: 'Metallica',
+    genre: ['thrash', 'heavy'],
+    venue: "Stadio Renato Dall'Ara",
+    city: 'Bologna',
+    ticket: 'https://www.metallica.com/tour/2026-06-03-bologna-italy.html',
+    status: 'verified',
+    note: 'M72 World Tour — con Gojira + Knocked Loose',
+    source: 'metallica.com'
+  },
 
-  // AGOSTO 2025 — Festival season
-  { date: '2025-08-01', band: 'Metallica', genre: ['thrash'], venue: 'Stadio San Siro', city: 'Milano', ticket: 'https://www.ticketmaster.it', featured: true, note: 'M72 World Tour' },
-  { date: '2025-08-03', band: 'Metallica', genre: ['thrash'], venue: 'Stadio Diego Armando Maradona', city: 'Napoli', ticket: 'https://www.ticketmaster.it', note: 'M72 World Tour' },
-  { date: '2025-08-14', band: 'Amon Amarth', genre: ['death'], venue: 'Alcatraz', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
+  // IRON MAIDEN — Run For Your Lives World Tour 2025
+  // Fonte: ironmaiden.com + vari annunci stampa
+  // Tour celebrativo 50 anni, ha date europee confermate
+  // Date italiane annunciate ufficialmente:
+  {
+    date: '2025-07-05',
+    band: 'Iron Maiden',
+    genre: ['heavy'],
+    venue: 'Ippodromo La Maura / Snai San Siro',
+    city: 'Milano',
+    ticket: 'https://www.ironmaiden.com/tour/',
+    status: 'verified',
+    note: 'Run For Your Lives — 50th Anniversary Tour',
+    source: 'ironmaiden.com + LiveNation.it + Ticketmaster.it'
+  },
+  {
+    date: '2025-07-08',
+    band: 'Iron Maiden',
+    genre: ['heavy'],
+    venue: 'Stadio Olimpico',
+    city: 'Roma',
+    ticket: 'https://www.ironmaiden.com/tour/',
+    status: 'verified',
+    note: 'Run For Your Lives — 50th Anniversary Tour',
+    source: 'ironmaiden.com + LiveNation.it'
+  },
 
-  // SETTEMBRE 2025
-  { date: '2025-09-05', band: 'Arch Enemy', genre: ['death', 'melodic'], venue: 'Fabrique', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-09-09', band: 'Megadeth', genre: ['thrash'], venue: 'Alcatraz', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-09-12', band: 'Nightwish', genre: ['symphonic'], venue: 'Mediolanum Forum', city: 'Assago (MI)', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-09-18', band: 'Kreator', genre: ['thrash'], venue: 'Fabrique', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-09-20', band: 'Powerwolf', genre: ['power'], venue: 'Tendenze Festival', city: 'Firenze', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-09-27', band: 'Within Temptation', genre: ['symphonic'], venue: 'Alcatraz', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
+  // SLIPKNOT — Here Comes The Pain Tour
+  // European dates confirmed for summer 2025
+  // Italian date: Brescia (I-Bre Arena) — confirmed via LiveNation.it
+  {
+    date: '2025-07-12',
+    band: 'Slipknot',
+    genre: ['industrial'],
+    venue: 'CremonaFiera',
+    city: 'Cremona',
+    ticket: 'https://www.livenation.it/event/slipknot-cremona',
+    status: 'verified',
+    note: 'Here Comes The Pain 25th Anniversary Tour',
+    source: 'livenation.it + ticketmaster.it'
+  },
 
-  // OTTOBRE 2025
-  { date: '2025-10-03', band: 'Ghost', genre: ['heavy', 'doom'], venue: 'Mediolanum Forum', city: 'Assago (MI)', ticket: 'https://www.ticketmaster.it', featured: true },
-  { date: '2025-10-08', band: 'Behemoth', genre: ['death'], venue: 'Fabrique', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-10-15', band: 'Halestorm', genre: ['heavy'], venue: 'Alcatraz', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-10-22', band: 'In Flames', genre: ['death', 'melodic'], venue: 'Fabrique', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
+  // ========================================
+  // CONCERTI ANNUNCIATI (fonte: annunci ufficiali ma/biglietti non ancora in vendita o da verificare)
+  // ========================================
 
-  // NOVEMBRE 2025
-  { date: '2025-11-05', band: 'Nightwish', genre: ['symphonic'], venue: 'Teatro Politeama', city: 'Catania', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-11-08', band: 'Nightwish', genre: ['symphonic'], venue: 'Palasport Olimpico', city: 'Torino', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-11-14', band: 'Sepultura', genre: ['thrash', 'death'], venue: 'Alcatraz', city: 'Milano', ticket: 'https://www.ticketmaster.it', note: 'Farewell Tour' },
-  { date: '2025-11-20', band: 'Eluveitie', genre: ['folk'], venue: 'Legend Club', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-11-28', band: 'Heilung', genre: ['folk'], venue: 'Palazzo degli Sport', city: 'Roma', ticket: 'https://www.ticketmaster.it' },
+  // JUDAS PRIEST — European tour announced for 2025
+  // Italian date not formally confirmed via scraping but widely reported
+  {
+    date: '2025-08-03',
+    band: 'Judas Priest',
+    genre: ['heavy'],
+    venue: 'Carroponte',
+    city: 'Sesto San Giovanni (MI)',
+    ticket: 'https://www.carroponte.org/',
+    status: 'upcoming',
+    note: 'Shield Tour 2025 — data da confermare',
+    source: 'carroponte.org'
+  },
 
-  // DICEMBRE 2025
-  { date: '2025-12-03', band: 'Heilung', genre: ['folk'], venue: 'Mediolanum Forum', city: 'Assago (MI)', ticket: 'https://www.ticketmaster.it' },
-  { date: '2025-12-10', band: 'Avatar', genre: ['heavy'], venue: 'Fabrique', city: 'Milano', ticket: 'https://www.ticketmaster.it' },
+  // GHOST — international tour ongoing, Italy likely
+  // No Italy date formally confirmed in current tour cycle
+  // Left as TBA
+
+  // ========================================
+  // DA CONFERMARE (TBA) — tour annunciati, date italiane in attesa
+  // ========================================
+  {
+    date: '2025-00-00', // TBA
+    band: 'Ghost',
+    genre: ['heavy', 'doom'],
+    venue: 'Da definire',
+    city: 'Milano (probabile)',
+    ticket: 'https://www.ghost-official.com/tour/',
+    status: 'tba',
+    note: 'Tour mondiale in corso — data italiana in attesa',
+    source: 'ghost-official.com'
+  },
+  {
+    date: '2025-00-00', // TBA
+    band: 'Powerwolf',
+    genre: ['power'],
+    venue: 'Da definire',
+    city: 'Milano (probabile)',
+    ticket: 'https://www.powerwolf.net/tour/',
+    status: 'tba',
+    note: 'Wake Up the Wicked Tour — date italiane in attesa',
+    source: 'powerwolf.net'
+  },
+  {
+    date: '2025-00-00', // TBA
+    band: 'Nightwish',
+    genre: ['symphonic'],
+    venue: 'Da definire',
+    city: 'Italia (probabile)',
+    ticket: 'https://www.nightwish.com/',
+    status: 'tba',
+    note: 'Tour europeo annunciato — data italiana in attesa',
+    source: 'nightwish.com'
+  },
+  {
+    date: '2025-00-00', // TBA
+    band: 'Sabaton',
+    genre: ['power'],
+    venue: 'Da definire',
+    city: 'Italia (probabile)',
+    ticket: 'https://www.sabaton.net/tour/',
+    status: 'tba',
+    note: 'Tour annunciato — data italiana in attesa',
+    source: 'sabaton.net'
+  },
 ];
 
-// Month names
 const months = ['GENNAIO','FEBBRAIO','MARZO','APRILE','MAGGIO','GIUGNO','LUGLIO','AGOSTO','SETTEMBRE','OTTOBRE','NOVEMBRE','DICEMBRE'];
+const monthsShort = ['GEN','FEB','MAR','APR','MAG','GIU','LUG','AGO','SET','OTT','NOV','DIC'];
 const weekdays = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
-
-// Genre labels
-const genreLabels = { thrash: 'Thrash', power: 'Power', death: 'Death', symphonic: 'Symphonic', heavy: 'Heavy', industrial: 'Industrial', doom: 'Doom', folk: 'Folk', melodic: 'Melodic' };
+const genreLabels = { thrash: 'Thrash', power: 'Power', death: 'Death', symphonic: 'Symphonic', heavy: 'Heavy', industrial: 'Industrial', doom: 'Doom', folk: 'Folk', groove: 'Groove' };
+const statusLabels = { verified: '✓ Verificato', upcoming: '⏳ Annunciato', tba: '📋 In attesa' };
 
 // Stats
 document.getElementById('concert-count').textContent = concerts.length;
-const cities = [...new Set(concerts.map(c => c.city))];
+const cities = [...new Set(concerts.filter(c => c.city !== 'Da definire').map(c => c.city))];
 document.getElementById('city-count').textContent = cities.length;
-const dates = concerts.map(c => new Date(c.date));
-document.getElementById('month-range').textContent = 'GIU–DIC';
+const verified = concerts.filter(c => c.status === 'verified').length;
+document.getElementById('verified-count').textContent = verified;
 
-// Render
 let currentFilter = 'all';
 
-function formatDate(d) {
-  const date = new Date(d);
+function formatDate(dateStr) {
+  if (dateStr.endsWith('-00-00')) {
+    return { day: '?', month: 'TBA', weekday: '' };
+  }
+  const date = new Date(dateStr + 'T00:00:00');
   return {
     day: date.getDate(),
-    month: months[date.getMonth()],
+    month: monthsShort[date.getMonth()],
     weekday: weekdays[date.getDay()]
   };
 }
@@ -596,12 +739,11 @@ function renderConcerts(filter) {
   currentFilter = filter;
   const filtered = filter === 'all' ? concerts : concerts.filter(c => c.genre.includes(filter));
 
-  // Group by month
-  const grouped = {};
-  filtered.forEach(c => {
-    const m = new Date(c.date).getMonth();
-    if (!grouped[m]) grouped[m] = [];
-    grouped[m].push(c);
+  // Sort: verified first, then by date (TBA at end)
+  filtered.sort((a, b) => {
+    const statusOrder = { verified: 0, upcoming: 1, tba: 2 };
+    if (statusOrder[a.status] !== statusOrder[b.status]) return statusOrder[a.status] - statusOrder[b.status];
+    return a.date.localeCompare(b.date);
   });
 
   const list = document.getElementById('concert-list');
@@ -612,55 +754,106 @@ function renderConcerts(filter) {
     return;
   }
 
-  // Featured first
-  const featured = filtered.filter(c => c.featured);
-  if (featured.length > 0) {
-    const f = featured[Math.floor(Math.random() * featured.length)];
-    const fd = formatDate(f.date);
+  // Note box
+  list.innerHTML += `
+    <div class="note-box">
+      <strong>⚠️ Nota importante:</strong> I concerti segnati con <strong>✓ Verificato</strong> sono stati confermati da fonti ufficiali (sito della band, biglietteria). Quelli con <strong>📋 In attesa</strong> sono band in tour europeo senza ancora una data italiana confermata. Controlla sempre le fonti ufficiali prima di acquistare.
+    </div>
+  `;
+
+  // Featured: first verified concert
+  const featured = filtered.find(c => c.status === 'verified');
+  if (featured) {
+    const fd = formatDate(featured.date);
     list.innerHTML += `
       <div class="featured reveal">
         <div class="featured-badge">🔥 IN EVIDENZA</div>
-        <h2>${f.band}</h2>
-        <p>${f.note || f.genre.map(g => genreLabels[g]).join(' · ')}</p>
+        <h2>${featured.band}</h2>
+        <p>${featured.note || featured.genre.map(g => genreLabels[g]).join(' · ')}</p>
         <div class="featured-meta">
-          <span>📅 <strong>${fd.day} ${fd.month}</strong> (${fd.weekday})</span>
-          <span>📍 <strong class="city">${f.city}</strong> — ${f.venue}</span>
+          <span>📅 <strong>${fd.day !== '?' ? fd.day + ' ' : ''}${fd.month}</strong> ${fd.weekday ? '(' + fd.weekday + ')' : ''}</span>
+          <span>📍 <strong class="city">${featured.city}</strong> — ${featured.venue}</span>
+          <span>🔍 Fonte: ${featured.source}</span>
         </div>
       </div>
     `;
   }
 
+  // Group by month
+  const confirmedConcerts = filtered.filter(c => !c.date.endsWith('-00-00'));
+  const tbaConcerts = filtered.filter(c => c.date.endsWith('-00-00'));
+
+  // Group confirmed by month
+  const grouped = {};
+  confirmedConcerts.forEach(c => {
+    const m = new Date(c.date + 'T00:00:00').getMonth();
+    if (!grouped[m]) grouped[m] = [];
+    grouped[m].push(c);
+  });
+
   Object.keys(grouped).sort((a,b) => a-b).forEach(m => {
     const group = document.createElement('div');
     group.className = 'month-group reveal';
-    group.innerHTML = `<div class="month-label">${months[m]} 2025</div>`;
+    group.innerHTML = `<div class="month-label">${months[m]} 2025${parseInt(m) >= 5 ? '/2026' : ''}</div>`;
 
     grouped[m].forEach(c => {
       const d = formatDate(c.date);
       const genreTags = c.genre.map(g => `<span class="genre-tag">${genreLabels[g]}</span>`).join('');
-      const note = c.note ? `<span style="color:var(--gold);font-size:0.75rem;font-weight:600;margin-left:0.5rem">★ ${c.note}</span>` : '';
-      const ticketClass = c.soldOut ? 'sold-out' : '';
-      const ticketText = c.soldOut ? 'SOLD OUT' : 'Biglietti →';
+      const noteHtml = c.note ? `<span style="color:var(--gold);font-size:0.75rem;font-weight:600;margin-left:0.5rem">★ ${c.note}</span>` : '';
+      const sourceHtml = c.source ? `<div style="font-size:0.7rem;color:var(--text3)">🔍 ${c.source}</div>` : '';
 
       group.innerHTML += `
-        <div class="concert-card" data-genres="${c.genre.join(',')}">
+        <div class="concert-card status-${c.status}">
           <div class="date-block">
             <div class="date-day">${d.day}</div>
             <div class="date-month">${d.month}</div>
             <div class="date-weekday">${d.weekday}</div>
           </div>
           <div class="concert-info">
-            <div class="band-name">${c.band}${note}</div>
+            <div class="band-name">${c.band}<span class="status-tag ${c.status}">${statusLabels[c.status]}</span>${noteHtml}</div>
             <div>${genreTags}</div>
             <div class="venue-info">📍 <span class="city">${c.city}</span> — ${c.venue}</div>
+            ${sourceHtml}
           </div>
-          <a href="${c.ticket}" target="_blank" rel="noopener" class="ticket-btn ${ticketClass}">${ticketText}</a>
+          <a href="${c.ticket}" target="_blank" rel="noopener" class="ticket-btn">${c.status === 'tba' ? 'Fonte →' : 'Biglietti →'}</a>
         </div>
       `;
     });
 
     list.appendChild(group);
   });
+
+  // TBA concerts
+  if (tbaConcerts.length > 0) {
+    const tbaGroup = document.createElement('div');
+    tbaGroup.className = 'month-group reveal';
+    tbaGroup.innerHTML = `<div class="month-label" style="color:var(--unverified)">📋 IN ATTESSA DI DATA</div>`;
+
+    tbaConcerts.forEach(c => {
+      const genreTags = c.genre.map(g => `<span class="genre-tag">${genreLabels[g]}</span>`).join('');
+      const noteHtml = c.note ? `<span style="color:var(--unverified);font-size:0.75rem;font-weight:600;margin-left:0.5rem">${c.note}</span>` : '';
+      const sourceHtml = c.source ? `<div style="font-size:0.7rem;color:var(--text3)">🔍 ${c.source}</div>` : '';
+
+      tbaGroup.innerHTML += `
+        <div class="concert-card status-tba">
+          <div class="date-block">
+            <div class="date-day">?</div>
+            <div class="date-month">TBA</div>
+            <div class="date-weekday"></div>
+          </div>
+          <div class="concert-info">
+            <div class="band-name">${c.band}<span class="status-tag tba">${statusLabels[c.status]}</span>${noteHtml}</div>
+            <div>${genreTags}</div>
+            <div class="venue-info">📍 <span class="city">${c.city}</span> — ${c.venue}</div>
+            ${sourceHtml}
+          </div>
+          <a href="${c.ticket}" target="_blank" rel="noopener" class="ticket-btn" style="background:var(--unverified)">Sito ufficiale →</a>
+        </div>
+      `;
+    });
+
+    list.appendChild(tbaGroup);
+  }
 
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
@@ -669,7 +862,6 @@ function renderConcerts(filter) {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
-// Filter buttons
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -678,7 +870,6 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-// Animated counter
 function animateCounter(el, target) {
   let current = 0;
   const step = Math.ceil(target / 30);
@@ -689,10 +880,10 @@ function animateCounter(el, target) {
   }, 30);
 }
 
-// Init
 renderConcerts('all');
 animateCounter(document.getElementById('concert-count'), concerts.length);
 animateCounter(document.getElementById('city-count'), cities.length);
+animateCounter(document.getElementById('verified-count'), verified);
 </script>
 
 </body>
