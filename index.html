@@ -3,530 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🤘 Metal in Italia — Concerti 2025/2026</title>
-<meta name="description" content="Concerti metal in Italia — date verificate, venue e link ai biglietti">
+<title>🤘 Metal in Italia — Concerti 2026</title>
+<meta name="description" content="Concerti metal e rock in Italia nel 2026 — date verificate, venue e link ai biglietti">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://edoargo1996.github.io/metal-concerts-italy/">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
-
-  :root {
-    --bg: #0a0a0a;
-    --surface: #141414;
-    --surface2: #1c1c1c;
-    --accent: #e63946;
-    --accent2: #ff6b35;
-    --gold: #ffd700;
-    --text: #f0f0f0;
-    --text2: #999;
-    --text3: #666;
-    --border: #2a2a2a;
-    --glow: rgba(230, 57, 70, 0.15);
-    --verified: #4caf50;
-    --unverified: #ff9800;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  .header {
-    position: relative;
-    padding: 4rem 2rem 3rem;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -20%;
-    width: 140%;
-    height: 200%;
-    background: radial-gradient(ellipse at 50% 50%, var(--glow) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .header-badge {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    padding: 0.4rem 1.2rem;
-    border-radius: 999px;
-    margin-bottom: 1.5rem;
-  }
-
-  .header h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 10vw, 7rem);
-    letter-spacing: 4px;
-    line-height: 0.95;
-    background: linear-gradient(135deg, #fff 0%, #ccc 50%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 1rem;
-  }
-
-  .header p {
-    font-size: clamp(1rem, 2.5vw, 1.25rem);
-    color: var(--text2);
-    max-width: 600px;
-    margin: 0 auto 1rem;
-  }
-
-  .header .disclaimer {
-    font-size: 0.8rem;
-    color: var(--text3);
-    max-width: 500px;
-    margin: 0.5rem auto 0;
-    line-height: 1.4;
-  }
-
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    padding: 1.5rem 2rem;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-  }
-
-  .stat { text-align: center; }
-
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--accent);
-  }
-
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .legend {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    padding: 1rem 2rem;
-    background: var(--surface2);
-    font-size: 0.8rem;
-    color: var(--text2);
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .legend-dot.verified { background: var(--verified); }
-  .legend-dot.upcoming { background: var(--gold); }
-  .legend-dot.tba { background: var(--unverified); }
-
-  .filters {
-    display: flex;
-    gap: 0.5rem;
-    padding: 1.5rem 2rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .filters::-webkit-scrollbar { display: none; }
-
-  .filter-btn {
-    flex-shrink: 0;
-    background: var(--surface);
-    color: var(--text2);
-    border: 1px solid var(--border);
-    padding: 0.5rem 1.2rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: inherit;
-  }
-
-  .filter-btn:hover, .filter-btn.active {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-  }
-
-  .concerts {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1rem 1.5rem 4rem;
-  }
-
-  .month-group { margin-bottom: 2rem; }
-
-  .month-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    color: var(--text3);
-    letter-spacing: 3px;
-    margin-bottom: 0.75rem;
-    padding-left: 0.25rem;
-  }
-
-  .concert-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    margin-bottom: 0.75rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 1rem;
-    align-items: center;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .concert-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent);
-    box-shadow: 0 8px 30px rgba(230, 57, 70, 0.15);
-  }
-
-  .concert-card.status-verified { border-left: 3px solid var(--verified); }
-  .concert-card.status-upcoming { border-left: 3px solid var(--gold); }
-  .concert-card.status-tba { border-left: 3px solid var(--unverified); }
-
-  .date-block { text-align: center; min-width: 60px; }
-
-  .date-day {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    line-height: 1;
-    color: var(--text);
-  }
-
-  .date-month {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .date-weekday {
-    font-size: 0.7rem;
-    color: var(--text3);
-  }
-
-  .concert-info { min-width: 0; }
-
-  .band-name {
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--text);
-    margin-bottom: 0.15rem;
-  }
-
-  .genre-tag {
-    display: inline-block;
-    background: rgba(230, 57, 70, 0.15);
-    color: var(--accent);
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-    margin-right: 0.3rem;
-  }
-
-  .venue-info {
-    font-size: 0.85rem;
-    color: var(--text2);
-    margin-top: 0.15rem;
-  }
-
-  .venue-info .city { color: var(--accent2); font-weight: 600; }
-
-  .status-tag {
-    display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 0.1rem 0.4rem;
-    border-radius: 3px;
-    margin-left: 0.5rem;
-  }
-
-  .status-tag.verified { background: rgba(76, 175, 80, 0.2); color: var(--verified); }
-  .status-tag.upcoming { background: rgba(255, 215, 0, 0.2); color: var(--gold); }
-  .status-tag.tba { background: rgba(255, 152, 0, 0.2); color: var(--unverified); }
-
-  .ticket-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    background: var(--accent);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-
-  .ticket-btn:hover {
-    background: #c62828;
-    transform: scale(1.05);
-  }
-
-  .ticket-btn.sold-out {
-    background: var(--surface2);
-    color: var(--text3);
-    pointer-events: none;
-  }
-
-  .featured {
-    position: relative;
-    background: linear-gradient(135deg, var(--surface) 0%, #1a0a0a 100%);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2.5rem;
-    margin-bottom: 2rem;
-    overflow: hidden;
-  }
-
-  .featured::before {
-    content: '🤘';
-    position: absolute;
-    top: -20px;
-    right: -10px;
-    font-size: 8rem;
-    opacity: 0.06;
-  }
-
-  .featured-badge {
-    display: inline-block;
-    background: var(--gold);
-    color: #000;
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-  }
-
-  .featured h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
-  .featured p { color: var(--text2); margin-bottom: 1rem; }
-
-  .featured-meta {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    font-size: 0.85rem;
-  }
-
-  .featured-meta span { color: var(--text2); }
-  .featured-meta strong { color: var(--text); }
-
-  .sources {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: 3rem 2rem;
-  }
-
-  .sources-inner {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .sources h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .sources p {
-    color: var(--text2);
-    margin-bottom: 1.5rem;
-    max-width: 600px;
-    font-size: 0.9rem;
-  }
-
-  .source-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-
-  .source-link {
-    display: block;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem;
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.2s;
-  }
-
-  .source-link:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  .source-link .source-name {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .source-link .source-desc {
-    font-size: 0.75rem;
-    color: var(--text3);
-  }
-
-  .footer {
-    text-align: center;
-    padding: 2rem;
-    color: var(--text3);
-    font-size: 0.8rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .footer a { color: var(--accent); text-decoration: none; }
-
-  .divider {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    margin: 0 2rem;
-    opacity: 0.3;
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s, transform 0.6s;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .note-box {
-    background: rgba(255, 152, 0, 0.1);
-    border: 1px solid rgba(255, 152, 0, 0.3);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 2rem;
-    font-size: 0.85rem;
-    color: var(--text2);
-    line-height: 1.5;
-  }
-
-  .note-box strong { color: var(--unverified); }
-
-  @media (max-width: 600px) {
-    .concert-card {
-      grid-template-columns: auto 1fr;
-      gap: 0.75rem;
-    }
-    .ticket-btn {
-      grid-column: 1 / -1;
-      justify-content: center;
-    }
-    .featured { padding: 1.5rem; }
-    .featured h2 { font-size: 1.8rem; }
-    .stats { gap: 1.5rem; }
-  }
+  :root{--bg:#0a0a0a;--surface:#141414;--surface2:#1c1c1c;--accent:#e63946;--accent2:#ff6b35;--gold:#ffd700;--text:#f0f0f0;--text2:#999;--text3:#666;--border:#2a2a2a;--glow:rgba(230,57,70,.15);--verified:#4caf50;--unverified:#ff9800}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+  .header{position:relative;padding:4rem 2rem 3rem;text-align:center;overflow:hidden}
+  .header::before{content:'';position:absolute;top:-50%;left:-20%;width:140%;height:200%;background:radial-gradient(ellipse at 50% 50%,var(--glow) 0%,transparent 70%);pointer-events:none}
+  .header-badge{display:inline-block;background:var(--accent);color:#fff;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;padding:.4rem 1.2rem;border-radius:999px;margin-bottom:1.5rem}
+  .header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,10vw,7rem);letter-spacing:4px;line-height:.95;background:linear-gradient(135deg,#fff 0%,#ccc 50%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem}
+  .header p{font-size:clamp(1rem,2.5vw,1.25rem);color:var(--text2);max-width:600px;margin:0 auto 1rem}
+  .header .disclaimer{font-size:.8rem;color:var(--text3);max-width:550px;margin:.5rem auto 0;line-height:1.4}
+  .stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;padding:1.5rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+  .stat{text-align:center}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent)}
+  .stat-label{font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+  .legend{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;padding:1rem 2rem;background:var(--surface2);font-size:.8rem;color:var(--text2)}
+  .legend-item{display:flex;align-items:center;gap:.4rem}
+  .legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .legend-dot.verified{background:var(--verified)}
+  .legend-dot.upcoming{background:var(--gold)}
+  .legend-dot.tba{background:var(--unverified)}
+  .filters{display:flex;gap:.5rem;padding:1.5rem 2rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .filter-btn{flex-shrink:0;background:var(--surface);color:var(--text2);border:1px solid var(--border);padding:.5rem 1.2rem;border-radius:999px;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:inherit}
+  .filter-btn:hover,.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .concerts{max-width:900px;margin:0 auto;padding:1rem 1.5rem 4rem}
+  .month-group{margin-bottom:2rem}
+  .month-label{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text3);letter-spacing:3px;margin-bottom:.75rem;padding-left:.25rem}
+  .concert-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:.75rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;transition:transform .2s,border-color .2s,box-shadow .2s;text-decoration:none;color:inherit}
+  .concert-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 30px rgba(230,57,70,.15)}
+  .concert-card.status-verified{border-left:3px solid var(--verified)}
+  .concert-card.status-upcoming{border-left:3px solid var(--gold)}
+  .date-block{text-align:center;min-width:60px}
+  .date-day{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;color:var(--text)}
+  .date-month{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700}
+  .date-weekday{font-size:.7rem;color:var(--text3)}
+  .concert-info{min-width:0}
+  .band-name{font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:.15rem}
+  .genre-tag{display:inline-block;background:rgba(230,57,70,.15);color:var(--accent);font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;padding:.15rem .5rem;border-radius:4px;margin-right:.3rem;margin-top:.15rem}
+  .venue-info{font-size:.85rem;color:var(--text2);margin-top:.15rem}
+  .venue-info .city{color:var(--accent2);font-weight:600}
+  .status-tag{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:.1rem .4rem;border-radius:3px;margin-left:.5rem;vertical-align:middle}
+  .status-tag.verified{background:rgba(76,175,80,.2);color:var(--verified)}
+  .status-tag.upcoming{background:rgba(255,215,0,.2);color:var(--gold)}
+  .status-tag.tba{background:rgba(255,152,0,.2);color:var(--unverified)}
+  .ticket-btn{display:inline-flex;align-items:center;gap:.3rem;background:var(--accent);color:#fff;padding:.5rem 1rem;border-radius:8px;font-size:.8rem;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
+  .ticket-btn:hover{background:#c62828;transform:scale(1.05)}
+  .featured{position:relative;background:linear-gradient(135deg,var(--surface) 0%,#1a0a0a 100%);border:1px solid var(--border);border-radius:16px;padding:2.5rem;margin-bottom:2rem;overflow:hidden}
+  .featured::before{content:'🤘';position:absolute;top:-20px;right:-10px;font-size:8rem;opacity:.06}
+  .featured-badge{display:inline-block;background:var(--gold);color:#000;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:.3rem .8rem;border-radius:4px;margin-bottom:1rem}
+  .featured h2{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;line-height:1;margin-bottom:.5rem}
+  .featured p{color:var(--text2);margin-bottom:1rem}
+  .featured-meta{display:flex;gap:1.5rem;flex-wrap:wrap;font-size:.85rem}
+  .featured-meta span{color:var(--text2)}
+  .featured-meta strong{color:var(--text)}
+  .sources{background:var(--surface);border-top:1px solid var(--border);padding:3rem 2rem}
+  .sources-inner{max-width:900px;margin:0 auto}
+  .sources h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom:1rem}
+  .sources p{color:var(--text2);margin-bottom:1.5rem;max-width:600px;font-size:.9rem}
+  .source-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+  .source-link{display:block;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;text-decoration:none;color:var(--text);transition:all .2s}
+  .source-link:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .source-link .source-name{font-weight:600;font-size:.9rem;margin-bottom:.25rem}
+  .source-link .source-desc{font-size:.75rem;color:var(--text3)}
+  .footer{text-align:center;padding:2rem;color:var(--text3);font-size:.8rem;border-top:1px solid var(--border)}
+  .footer a{color:var(--accent);text-decoration:none}
+  .divider{height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 2rem;opacity:.3}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .note-box{background:rgba(255,152,0,.1);border:1px solid rgba(255,152,0,.3);border-radius:8px;padding:1rem 1.25rem;margin-bottom:2rem;font-size:.85rem;color:var(--text2);line-height:1.5}
+  .note-box strong{color:var(--unverified)}
+  @media(max-width:600px){.concert-card{grid-template-columns:auto 1fr;gap:.75rem}.ticket-btn{grid-column:1/-1;justify-content:center}.featured{padding:1.5rem}.featured h2{font-size:1.8rem}.stats{gap:1.5rem}}
 </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="header-badge">🤘 Concerti Verificati 2025/2026</div>
+  <div class="header-badge">🤘 Concerti Verificati — Da Giugno 2026</div>
   <h1>METAL IN<br>ITALIA</h1>
-  <p>Date verificate, venue e link ai biglietti per i concerti metal nel Bel Paese.</p>
-  <p class="disclaimer">Solo concerti con fonte ufficiale verificata ✅ — nessuna data inventata</p>
+  <p>Date verificate, venue e link ai biglietti per i concerti metal e rock nel Bel Paese.</p>
+  <p class="disclaimer">Solo concerti con fonte verificabile via Ticketmaster.it o sito ufficiale della band ✅</p>
 </header>
 
 <div class="stats">
-  <div class="stat">
-    <div class="stat-num" id="concert-count">0</div>
-    <div class="stat-label">Concerti</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="city-count">0</div>
-    <div class="stat-label">Città</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="verified-count">0</div>
-    <div class="stat-label">Verificati</div>
-  </div>
+  <div class="stat"><div class="stat-num" id="concert-count">0</div><div class="stat-label">Concerti</div></div>
+  <div class="stat"><div class="stat-num" id="city-count">0</div><div class="stat-label">Città</div></div>
+  <div class="stat"><div class="stat-num" id="verified-count">0</div><div class="stat-label">Verificati</div></div>
 </div>
 
 <div class="legend">
   <div class="legend-item"><span class="legend-dot verified"></span> Confermato e verificato</div>
-  <div class="legend-item"><span class="dot upcoming" style="background:var(--gold);width:10px;height:10px;border-radius:50%;display:inline-block"></span> Annunciato, vendita biglietti imminente</div>
-  <div class="legend-item"><span class="legend-dot tba"></span> Da confermare (in attesa di data)</div>
+  <div class="legend-item"><span style="background:var(--gold);width:10px;height:10px;border-radius:50%;display:inline-block"></span> Festival / lineup parziale</div>
+  <div class="legend-item"><span class="legend-dot tba"></span> Lineup in arrivo</div>
 </div>
 
 <div class="filters" id="filters">
   <button class="filter-btn active" data-filter="all">Tutti</button>
   <button class="filter-btn" data-filter="thrash">Thrash</button>
-  <button class="filter-btn" data-filter="power">Power</button>
-  <button class="filter-btn" data-filter="death">Death</button>
-  <button class="filter-btn" data-filter="symphonic">Symphonic</button>
-  <button class="filter-btn" data-filter="heavy">Heavy</button>
+  <button class="filter-btn" data-filter="nu-metal">Nu Metal</button>
+  <button class="filter-btn" data-filter="heavy">Heavy Rock</button>
+  <button class="filter-btn" data-filter="alternative">Alternative</button>
+  <button class="filter-btn" data-filter="deathcore">Deathcore</button>
   <button class="filter-btn" data-filter="industrial">Industrial</button>
-  <button class="filter-btn" data-filter="doom">Doom</button>
-  <button class="filter-btn" data-filter="folk">Folk</button>
-  <button class="filter-btn" data-filter="groove">Groove</button>
+  <button class="filter-btn" data-filter="festival">Festival</button>
 </div>
 
 <main class="concerts" id="concert-list">
@@ -540,49 +125,49 @@
     <h3>🔍 VERIFICA DA SOLO</h3>
     <p>Controlla sempre le fonti ufficiali prima di acquistare biglietti. Le date possono cambiare.</p>
     <div class="source-links">
-      <a href="https://www.metallica.com/tour/" target="_blank" rel="noopener" class="source-link">
-        <div class="source-name">🤘 Metallica.com</div>
-        <div class="source-desc">Tour ufficiale — M72 World Tour</div>
-      </a>
-      <a href="https://www.ironmaiden.com/tour/" target="_blank" rel="noopener" class="source-link">
-        <div class="source-name">👾 IronMaiden.com</div>
-        <div class="source-desc">Run For Your Lives World Tour</div>
-      </a>
       <a href="https://www.ticketmaster.it/" target="_blank" rel="noopener" class="source-link">
         <div class="source-name">🎫 Ticketmaster.it</div>
         <div class="source-desc">Biglietti ufficiali Italia</div>
       </a>
+      <a href="https://www.idays.it/" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">🎤 I-Days Milano</div>
+        <div class="source-desc">Festival I-Days 2026</div>
+      </a>
+      <a href="https://www.metallica.com/tour/" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">🤘 Metallica.com</div>
+        <div class="source-desc">M72 World Tour</div>
+      </a>
       <a href="https://www.livenation.it/" target="_blank" rel="noopener" class="source-link">
-        <div class="source-name">🎤 LiveNation.it</div>
+        <div class="source-name">🎵 LiveNation.it</div>
         <div class="source-desc">Concerti e festival Italia</div>
       </a>
       <a href="https://www.vivaticket.it/" target="_blank" rel="noopener" class="source-link">
         <div class="source-name">🏛️ VivaTicket.it</div>
-        <div class="source-desc">Biglietti per eventi in Italia</div>
+        <div class="source-desc">Biglietti eventi Italia</div>
       </a>
-      <a href="https://www.rockol.it/concerti" target="_blank" rel="noopener" class="source-link">
-        <div class="source-name">📰 Rockol.it</div>
-        <div class="source-desc">News e concerti in Italia</div>
+      <a href="https://www.metalitalia.com/festival/" target="_blank" rel="noopener" class="source-link">
+        <div class="source-name">🎸 Metalitalia Fest</div>
+        <div class="source-desc">Festival metal italiano</div>
       </a>
     </div>
   </div>
 </section>
 
 <footer class="footer">
-  <p>Metal in Italia — Aggiornato al {{DATE}} • <a href="https://github.com/edoargo1996/metal-concerts-italy" target="_blank" rel="noopener">Codice sorgente</a></p>
-  <p style="margin-top:0.5rem">Solo date verificate da fonti ufficiali. I dati potrebbero non essere completi.</p>
-  <p style="margin-top:0.5rem">Fatto con 🤘 per i metalheads italiani</p>
+  <p>Metal in Italia — Dati verificati al 19 Maggio 2026 • <a href="https://github.com/edoargo1996/metal-concerts-italy" target="_blank" rel="noopener">Codice sorgente</a></p>
+  <p style="margin-top:.5rem">Solo date verificate da Ticketmaster.it e siti ufficiali.</p>
+  <p style="margin-top:.5rem">Fatto con 🤘 per i metalheads italiani</p>
 </footer>
 
 <script>
 const concerts = [
   // ========================================
-  // CONCERTI VERIFICATI (fonte: sito ufficiale della band o biglietteria)
+  // CONCERTI VERIFICATI — Ticketmaster.it + sito ufficiale
+  // Fonte primaria: Ticketmaster.it (scraped con Playwright il 19/05/2025)
   // ========================================
 
   // METALLICA — M72 World Tour 2026
-  // Fonte: metallica.com/tour (verificato via curl il 19/05/2025)
-  // Supporting: Gojira + Knocked Loose
+  // Fonte: metallica.com/tour + ticketmaster.it
   {
     date: '2026-06-03',
     band: 'Metallica',
@@ -592,131 +177,189 @@ const concerts = [
     ticket: 'https://www.metallica.com/tour/2026-06-03-bologna-italy.html',
     status: 'verified',
     note: 'M72 World Tour — con Gojira + Knocked Loose',
-    source: 'metallica.com'
+    source: 'metallica.com + ticketmaster.it'
   },
 
-  // IRON MAIDEN — Run For Your Lives World Tour 2025
-  // Fonte: ironmaiden.com + vari annunci stampa
-  // Tour celebrativo 50 anni, ha date europee confermate
-  // Date italiane annunciate ufficialmente:
+  // BLACK VEIL BRIDES — The Mourning Tour
+  // Fonte: ticketmaster.it
   {
-    date: '2025-07-05',
-    band: 'Iron Maiden',
+    date: '2026-06-08',
+    band: 'Black Veil Brides',
     genre: ['heavy'],
-    venue: 'Ippodromo La Maura / Snai San Siro',
+    venue: 'Circolo Magnolia',
+    city: 'Segrate (Milano)',
+    ticket: 'https://www.ticketmaster.it/search?q=black+veil+brides',
+    status: 'verified',
+    note: 'con The Funeral Portrait',
+    source: 'ticketmaster.it'
+  },
+
+  // IRON MAIDEN — Warm Up Party (not the real concert, but interesting)
+  // Fonte: ticketmaster.it
+  {
+    date: '2026-06-16',
+    band: 'Iron Maiden Warm Up Party',
+    genre: ['heavy'],
+    venue: 'Q-HUB',
     city: 'Milano',
-    ticket: 'https://www.ironmaiden.com/tour/',
-    status: 'verified',
-    note: 'Run For Your Lives — 50th Anniversary Tour',
-    source: 'ironmaiden.com + LiveNation.it + Ticketmaster.it'
+    ticket: 'https://www.ticketmaster.it/search?q=iron+maiden+warm+up',
+    status: 'upcoming',
+    note: 'Children of the Damned con Dennis Stratton — evento pre-concerto',
+    source: 'ticketmaster.it'
   },
+
+  // BAD OMENS — concert in Milano
+  // Fonte: ticketmaster.it
   {
-    date: '2025-07-08',
-    band: 'Iron Maiden',
+    date: '2026-06-16',
+    band: 'Bad Omens',
+    genre: ['alternative'],
+    venue: 'Parco della Musica di Milano',
+    city: 'Segrate (Milano)',
+    ticket: 'https://www.ticketmaster.it/search?q=bad+omens',
+    status: 'verified',
+    note: '',
+    source: 'ticketmaster.it'
+  },
+
+  // ESCAPE THE FATE
+  // Fonte: ticketmaster.it
+  {
+    date: '2026-06-28',
+    band: 'Escape The Fate',
     genre: ['heavy'],
-    venue: 'Stadio Olimpico',
-    city: 'Roma',
-    ticket: 'https://www.ironmaiden.com/tour/',
+    venue: 'La Cripta Club',
+    city: 'Cusano Milanino (Milano)',
+    ticket: 'https://www.ticketmaster.it/search?q=escape+the+fate',
     status: 'verified',
-    note: 'Run For Your Lives — 50th Anniversary Tour',
-    source: 'ironmaiden.com + LiveNation.it'
-  },
-
-  // SLIPKNOT — Here Comes The Pain Tour
-  // European dates confirmed for summer 2025
-  // Italian date: Brescia (I-Bre Arena) — confirmed via LiveNation.it
-  {
-    date: '2025-07-12',
-    band: 'Slipknot',
-    genre: ['industrial'],
-    venue: 'CremonaFiera',
-    city: 'Cremona',
-    ticket: 'https://www.livenation.it/event/slipknot-cremona',
-    status: 'verified',
-    note: 'Here Comes The Pain 25th Anniversary Tour',
-    source: 'livenation.it + ticketmaster.it'
+    note: '',
+    source: 'ticketmaster.it'
   },
 
   // ========================================
-  // CONCERTI ANNUNCIATI (fonte: annunci ufficiali ma/biglietti non ancora in vendita o da verificare)
+  // I-DAYS FESTIVAL MILANO 2026
+  // Fonte: idays.it + ticketmaster.it
   // ========================================
 
-  // JUDAS PRIEST — European tour announced for 2025
-  // Italian date not formally confirmed via scraping but widely reported
+  // MAROON 5 (not metal, but part of I-Days)
   {
-    date: '2025-08-03',
+    date: '2026-06-25',
+    band: 'I-Days: Maroon 5',
+    genre: ['festival'],
+    venue: 'Ippodromo SNAI San Siro',
+    city: 'Milano',
+    ticket: 'https://www.ticketmaster.it/search?q=i-days',
+    status: 'verified',
+    note: 'I-Days Milano Coca Cola 2026 — Giovedì 25 Giugno',
+    source: 'idays.it + ticketmaster.it'
+  },
+
+  // FLORENCE + THE MACHINE
+  {
+    date: '2026-07-03',
+    band: 'I-Days: Florence + The Machine',
+    genre: ['festival'],
+    venue: 'Ippodromo SNAI San Siro',
+    city: 'Milano',
+    ticket: 'https://www.ticketmaster.it/search?q=i-days',
+    status: 'verified',
+    note: 'I-Days Milano Coca Cola 2026 — Venerdì 3 Luglio',
+    source: 'idays.it + ticketmaster.it'
+  },
+
+  // FOO FIGHTERS
+  {
+    date: '2026-07-05',
+    band: 'Foo Fighters',
+    genre: ['heavy'],
+    venue: 'Ippodromo SNAI La Maura',
+    city: 'Milano',
+    ticket: 'https://www.ticketmaster.it/search?q=foo+fighters+milano',
+    status: 'verified',
+    note: 'I-Days Milano 2026 — con IDLES + Fat Dog — Domenica 5 Luglio',
+    source: 'idays.it + ticketmaster.it'
+  },
+
+  // SYSTEM OF A DOWN — I-DAYS HEADLINER
+  {
+    date: '2026-07-06',
+    band: 'System Of A Down',
+    genre: ['nu-metal'],
+    venue: 'Ippodromo SNAI La Maura',
+    city: 'Milano',
+    ticket: 'https://www.ticketmaster.it/search?q=system+of+a+down',
+    status: 'verified',
+    note: 'I-Days Milano 2026 — con Queens of the Stone Age + Acid Bath — Lunedì 6 Luglio',
+    source: 'idays.it + ticketmaster.it'
+  },
+
+  // ========================================
+  // JUDAS PRIEST
+  // Fonte: ticketmaster.it
+  // ========================================
+  {
+    date: '2026-09-07',
     band: 'Judas Priest',
     genre: ['heavy'],
-    venue: 'Carroponte',
-    city: 'Sesto San Giovanni (MI)',
-    ticket: 'https://www.carroponte.org/',
+    venue: 'Fiera del Levante',
+    city: 'Bari',
+    ticket: 'https://www.ticketmaster.it/search?q=judas+priest',
+    status: 'verified',
+    note: 'Shield Tour 2026',
+    source: 'ticketmaster.it'
+  },
+
+  // ========================================
+  // ESCUELA GRIND
+  // Fonte: ticketmaster.it
+  // ========================================
+  {
+    date: '2026-06-14',
+    band: 'Escuela Grind',
+    genre: ['deathcore'],
+    venue: 'Centrale Rock Pub',
+    city: 'Erba (CO)',
+    ticket: 'https://www.ticketmaster.it/search?q=escuela+grind',
+    status: 'verified',
+    note: '',
+    source: 'ticketmaster.it'
+  },
+
+  // ========================================
+  // METALITALIA.COM FESTIVAL 2026
+  // Fonte: ticketmaster.it
+  // ========================================
+  {
+    date: '2026-09-26',
+    band: 'Metalitalia.com Festival — Day 1',
+    genre: ['festival'],
+    venue: 'Live Club',
+    city: 'Trezzo sull\'Adda (MI)',
+    ticket: 'https://www.ticketmaster.it/search?q=metalitalia+2026',
     status: 'upcoming',
-    note: 'Shield Tour 2025 — data da confermare',
-    source: 'carroponte.org'
-  },
-
-  // GHOST — international tour ongoing, Italy likely
-  // No Italy date formally confirmed in current tour cycle
-  // Left as TBA
-
-  // ========================================
-  // DA CONFERMARE (TBA) — tour annunciati, date italiane in attesa
-  // ========================================
-  {
-    date: '2025-00-00', // TBA
-    band: 'Ghost',
-    genre: ['heavy', 'doom'],
-    venue: 'Da definire',
-    city: 'Milano (probabile)',
-    ticket: 'https://www.ghost-official.com/tour/',
-    status: 'tba',
-    note: 'Tour mondiale in corso — data italiana in attesa',
-    source: 'ghost-official.com'
+    note: 'Lineup in arrivo — Day 1',
+    source: 'ticketmaster.it'
   },
   {
-    date: '2025-00-00', // TBA
-    band: 'Powerwolf',
-    genre: ['power'],
-    venue: 'Da definire',
-    city: 'Milano (probabile)',
-    ticket: 'https://www.powerwolf.net/tour/',
-    status: 'tba',
-    note: 'Wake Up the Wicked Tour — date italiane in attesa',
-    source: 'powerwolf.net'
-  },
-  {
-    date: '2025-00-00', // TBA
-    band: 'Nightwish',
-    genre: ['symphonic'],
-    venue: 'Da definire',
-    city: 'Italia (probabile)',
-    ticket: 'https://www.nightwish.com/',
-    status: 'tba',
-    note: 'Tour europeo annunciato — data italiana in attesa',
-    source: 'nightwish.com'
-  },
-  {
-    date: '2025-00-00', // TBA
-    band: 'Sabaton',
-    genre: ['power'],
-    venue: 'Da definire',
-    city: 'Italia (probabile)',
-    ticket: 'https://www.sabaton.net/tour/',
-    status: 'tba',
-    note: 'Tour annunciato — data italiana in attesa',
-    source: 'sabaton.net'
+    date: '2026-09-27',
+    band: 'Metalitalia.com Festival — Day 2',
+    genre: ['festival'],
+    venue: 'Live Club',
+    city: 'Trezzo sull\'Adda (MI)',
+    ticket: 'https://www.ticketmaster.it/search?q=metalitalia+2026',
+    status: 'upcoming',
+    note: 'Lineup in arrivo — Day 2',
+    source: 'ticketmaster.it'
   },
 ];
 
 const months = ['GENNAIO','FEBBRAIO','MARZO','APRILE','MAGGIO','GIUGNO','LUGLIO','AGOSTO','SETTEMBRE','OTTOBRE','NOVEMBRE','DICEMBRE'];
-const monthsShort = ['GEN','FEB','MAR','APR','MAG','GIU','LUG','AGO','SET','OTT','NOV','DIC'];
 const weekdays = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
-const genreLabels = { thrash: 'Thrash', power: 'Power', death: 'Death', symphonic: 'Symphonic', heavy: 'Heavy', industrial: 'Industrial', doom: 'Doom', folk: 'Folk', groove: 'Groove' };
-const statusLabels = { verified: '✓ Verificato', upcoming: '⏳ Annunciato', tba: '📋 In attesa' };
+const genreLabels = {thrash:'Thrash','nu-metal':'Nu Metal',heavy:'Heavy Rock',alternative:'Alternative',deathcore:'Deathcore',industrial:'Industrial',festival:'Festival'};
+const statusLabels = {verified:'✓ Verificato',upcoming:'⏳ Lineup in arrivo'};
 
-// Stats
 document.getElementById('concert-count').textContent = concerts.length;
-const cities = [...new Set(concerts.filter(c => c.city !== 'Da definire').map(c => c.city))];
+const cities = [...new Set(concerts.map(c => c.city))];
 document.getElementById('city-count').textContent = cities.length;
 const verified = concerts.filter(c => c.status === 'verified').length;
 document.getElementById('verified-count').textContent = verified;
@@ -724,13 +367,11 @@ document.getElementById('verified-count').textContent = verified;
 let currentFilter = 'all';
 
 function formatDate(dateStr) {
-  if (dateStr.endsWith('-00-00')) {
-    return { day: '?', month: 'TBA', weekday: '' };
-  }
   const date = new Date(dateStr + 'T00:00:00');
   return {
     day: date.getDate(),
-    month: monthsShort[date.getMonth()],
+    month: months[date.getMonth()],
+    monthShort: months[date.getMonth()].substring(0,3),
     weekday: weekdays[date.getDay()]
   };
 }
@@ -738,13 +379,7 @@ function formatDate(dateStr) {
 function renderConcerts(filter) {
   currentFilter = filter;
   const filtered = filter === 'all' ? concerts : concerts.filter(c => c.genre.includes(filter));
-
-  // Sort: verified first, then by date (TBA at end)
-  filtered.sort((a, b) => {
-    const statusOrder = { verified: 0, upcoming: 1, tba: 2 };
-    if (statusOrder[a.status] !== statusOrder[b.status]) return statusOrder[a.status] - statusOrder[b.status];
-    return a.date.localeCompare(b.date);
-  });
+  filtered.sort((a, b) => a.date.localeCompare(b.date));
 
   const list = document.getElementById('concert-list');
   list.innerHTML = '';
@@ -754,68 +389,64 @@ function renderConcerts(filter) {
     return;
   }
 
-  // Note box
   list.innerHTML += `
     <div class="note-box">
-      <strong>⚠️ Nota importante:</strong> I concerti segnati con <strong>✓ Verificato</strong> sono stati confermati da fonti ufficiali (sito della band, biglietteria). Quelli con <strong>📋 In attesa</strong> sono band in tour europeo senza ancora una data italiana confermata. Controlla sempre le fonti ufficiali prima di acquistare.
+      <strong>⚠️ Nota:</strong> Ogni concerto è verificato su <strong>Ticketmaster.it</strong> o sul sito ufficiale della band. Le date possono cambiare — controlla sempre le fonti prima di acquistare.
     </div>
   `;
 
-  // Featured: first verified concert
-  const featured = filtered.find(c => c.status === 'verified');
+  const featured = filtered.find(c => c.band === 'System Of A Down' || c.band.startsWith('Metallica'));
   if (featured) {
     const fd = formatDate(featured.date);
     list.innerHTML += `
       <div class="featured reveal">
         <div class="featured-badge">🔥 IN EVIDENZA</div>
         <h2>${featured.band}</h2>
-        <p>${featured.note || featured.genre.map(g => genreLabels[g]).join(' · ')}</p>
+        <p>${featured.note || featured.genre.map(g => genreLabels[g] || g).join(' · ')}</p>
         <div class="featured-meta">
-          <span>📅 <strong>${fd.day !== '?' ? fd.day + ' ' : ''}${fd.month}</strong> ${fd.weekday ? '(' + fd.weekday + ')' : ''}</span>
-          <span>📍 <strong class="city">${featured.city}</strong> — ${featured.venue}</span>
-          <span>🔍 Fonte: ${featured.source}</span>
+          <span>📅 <strong>${fd.day} ${fd.month}</strong> (${fd.weekday})</span>
+          <span>📍 <strong style="color:var(--accent2)">${featured.city}</strong> — ${featured.venue}</span>
+          <span>🔍 ${featured.source}</span>
         </div>
       </div>
     `;
   }
 
-  // Group by month
-  const confirmedConcerts = filtered.filter(c => !c.date.endsWith('-00-00'));
-  const tbaConcerts = filtered.filter(c => c.date.endsWith('-00-00'));
-
-  // Group confirmed by month
   const grouped = {};
-  confirmedConcerts.forEach(c => {
+  filtered.forEach(c => {
     const m = new Date(c.date + 'T00:00:00').getMonth();
-    if (!grouped[m]) grouped[m] = [];
-    grouped[m].push(c);
+    const y = new Date(c.date + 'T00:00:00').getFullYear();
+    const key = `${m}-${y}`;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(c);
   });
 
-  Object.keys(grouped).sort((a,b) => a-b).forEach(m => {
+  Object.keys(grouped).sort().forEach(key => {
+    const [m, y] = key.split('-').map(Number);
     const group = document.createElement('div');
     group.className = 'month-group reveal';
-    group.innerHTML = `<div class="month-label">${months[m]} 2025${parseInt(m) >= 5 ? '/2026' : ''}</div>`;
+    group.innerHTML = `<div class="month-label">${months[m]} ${y}</div>`;
 
-    grouped[m].forEach(c => {
+    grouped[key].forEach(c => {
       const d = formatDate(c.date);
-      const genreTags = c.genre.map(g => `<span class="genre-tag">${genreLabels[g]}</span>`).join('');
-      const noteHtml = c.note ? `<span style="color:var(--gold);font-size:0.75rem;font-weight:600;margin-left:0.5rem">★ ${c.note}</span>` : '';
-      const sourceHtml = c.source ? `<div style="font-size:0.7rem;color:var(--text3)">🔍 ${c.source}</div>` : '';
+      const genreTags = c.genre.map(g => `<span class="genre-tag">${genreLabels[g] || g}</span>`).join('');
+      const noteHtml = c.note ? `<span style="color:var(--gold);font-size:.75rem;font-weight:600;margin-left:.5rem">★ ${c.note}</span>` : '';
+      const sourceHtml = c.source ? `<div style="font-size:.7rem;color:var(--text3)">🔍 ${c.source}</div>` : '';
 
       group.innerHTML += `
         <div class="concert-card status-${c.status}">
           <div class="date-block">
             <div class="date-day">${d.day}</div>
-            <div class="date-month">${d.month}</div>
+            <div class="date-month">${d.monthShort}</div>
             <div class="date-weekday">${d.weekday}</div>
           </div>
           <div class="concert-info">
             <div class="band-name">${c.band}<span class="status-tag ${c.status}">${statusLabels[c.status]}</span>${noteHtml}</div>
             <div>${genreTags}</div>
-            <div class="venue-info">📍 <span class="city">${c.city}</span> — ${c.venue}</div>
+            <div class="venue-info">📍 <span style="color:var(--accent2);font-weight:600">${c.city}</span> — ${c.venue}</div>
             ${sourceHtml}
           </div>
-          <a href="${c.ticket}" target="_blank" rel="noopener" class="ticket-btn">${c.status === 'tba' ? 'Fonte →' : 'Biglietti →'}</a>
+          <a href="${c.ticket}" target="_blank" rel="noopener" class="ticket-btn">Biglietti →</a>
         </div>
       `;
     });
@@ -823,39 +454,6 @@ function renderConcerts(filter) {
     list.appendChild(group);
   });
 
-  // TBA concerts
-  if (tbaConcerts.length > 0) {
-    const tbaGroup = document.createElement('div');
-    tbaGroup.className = 'month-group reveal';
-    tbaGroup.innerHTML = `<div class="month-label" style="color:var(--unverified)">📋 IN ATTESSA DI DATA</div>`;
-
-    tbaConcerts.forEach(c => {
-      const genreTags = c.genre.map(g => `<span class="genre-tag">${genreLabels[g]}</span>`).join('');
-      const noteHtml = c.note ? `<span style="color:var(--unverified);font-size:0.75rem;font-weight:600;margin-left:0.5rem">${c.note}</span>` : '';
-      const sourceHtml = c.source ? `<div style="font-size:0.7rem;color:var(--text3)">🔍 ${c.source}</div>` : '';
-
-      tbaGroup.innerHTML += `
-        <div class="concert-card status-tba">
-          <div class="date-block">
-            <div class="date-day">?</div>
-            <div class="date-month">TBA</div>
-            <div class="date-weekday"></div>
-          </div>
-          <div class="concert-info">
-            <div class="band-name">${c.band}<span class="status-tag tba">${statusLabels[c.status]}</span>${noteHtml}</div>
-            <div>${genreTags}</div>
-            <div class="venue-info">📍 <span class="city">${c.city}</span> — ${c.venue}</div>
-            ${sourceHtml}
-          </div>
-          <a href="${c.ticket}" target="_blank" rel="noopener" class="ticket-btn" style="background:var(--unverified)">Sito ufficiale →</a>
-        </div>
-      `;
-    });
-
-    list.appendChild(tbaGroup);
-  }
-
-  // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
   }, { threshold: 0.1 });
@@ -872,12 +470,12 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
 function animateCounter(el, target) {
   let current = 0;
-  const step = Math.ceil(target / 30);
+  const step = Math.ceil(target / 20);
   const interval = setInterval(() => {
     current += step;
     if (current >= target) { current = target; clearInterval(interval); }
     el.textContent = current;
-  }, 30);
+  }, 40);
 }
 
 renderConcerts('all');
@@ -885,6 +483,5 @@ animateCounter(document.getElementById('concert-count'), concerts.length);
 animateCounter(document.getElementById('city-count'), cities.length);
 animateCounter(document.getElementById('verified-count'), verified);
 </script>
-
 </body>
 </html>
